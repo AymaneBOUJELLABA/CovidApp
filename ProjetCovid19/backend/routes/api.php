@@ -14,12 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('comments' , 'CommentController@index');
-Route::get('comment/{id}' , 'CommentController@show');
-Route::post('comment' , 'CommentController@store');
-Route::put('comment/{id}' , 'CommentController@update');
-Route::delete('comment/{id}' , 'CommentController@delete');
+Route::get('comments', 'CommentController@index');
+Route::get('comment/{id}', 'CommentController@show');
+Route::post('comment', 'CommentController@store');
+Route::put('comment/{id}', 'CommentController@update');
+Route::delete('comment/{id}', 'CommentController@delete');
 
-
-
-
+//just a test if it commited
