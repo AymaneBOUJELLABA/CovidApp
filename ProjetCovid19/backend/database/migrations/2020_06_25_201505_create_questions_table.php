@@ -24,7 +24,7 @@ class CreateQuestionsTable extends Migration
             $table->string('Q4');
             $table->string('Q5');
 
-            $table->boolean('isTreated');
+            $table->boolean('isTreated')->default('false');
             $table->string('resultat');
 
             $table->timestamps();

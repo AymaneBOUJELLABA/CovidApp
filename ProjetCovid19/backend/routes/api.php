@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,7 @@ Route::get('comment/{id}', 'CommentController@show');
 Route::post('comment', 'CommentController@store');
 Route::put('comment/{id}', 'CommentController@update');
 Route::delete('comment/{id}', 'CommentController@delete');
+
 
 //For the uses ( customers)
 

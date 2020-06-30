@@ -29,17 +29,14 @@ class CommentController extends Controller
         return Comment::create($request->all());
     }
 
-    public function update(Request $request , $id)
+    public function update(Request $request , Comment $Comment)
     {
-        $Comment = Comment::findOrFail($id);
         $Comment->update($request->all());
-
         return $Comment;
     }
 
-    public function delete(Request $request,$id)
+    public function delete(Request $request,Comment $Comment)
     {
-        $Comment = Comment::findOrFail($id);
         $Comment->delete();
 
         return [

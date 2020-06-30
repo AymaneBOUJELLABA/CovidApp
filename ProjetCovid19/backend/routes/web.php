@@ -20,3 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('/angular', 'angulartest@index');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
