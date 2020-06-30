@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
+
     public function information()
     {
         return $this->hasOne(Information::class);

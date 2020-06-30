@@ -25,16 +25,18 @@ Route::delete('comment/{id}', 'CommentController@delete');
 
 
 //For the uses ( customers)
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request)
+{
     return $request->user();
 });
-Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request)
+{
     $request->user()->tokens()->delete();
     return response('Logged out', 200);
 });
 
-Route::post('/login', function (Request $request) {
+Route::post('/login', function (Request $request)
+{
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
