@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Information extends Model
+class Info extends Model
 {
-    protected $fillable = ['nom' , 'prenom' , 'age' , 'sexe' , 'adresse' , 'telephone' , 'ville'];
+    protected $fillable = ['user_id', 'nom' , 'prenom' , 'age' , 'sexe' , 'adresse' , 'telephone' , 'ville'];
 
     public function user()
     {

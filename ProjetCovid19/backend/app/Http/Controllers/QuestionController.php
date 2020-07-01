@@ -24,7 +24,10 @@ class QuestionController extends Controller
     public function store(Request $request, $id)
     {   
         $user = User::findOrFail($id);
-
+        if($user->question)
+        {
+            return response('already exists');
+        }
         $data = $request->all();
         $data["user_id"] = $user->id;
 
@@ -50,11 +53,23 @@ class QuestionController extends Controller
     {
         $question = User::findOrFail($id)->question;
 
-        $question->delete();
+        if(!$question)
+        {
+            return  [
+                'message' => $message = 'no answers for this user',
+                'code' => 204,
+            ];
+        }
+        $isdeleted = $question->delete();
+        
+        if($isdeleted)
+            $message = 'deleted successfully';
+        else
+            $message = 'deletion failed';
 
         return [
+            'message' => $message,
             'code' => 204,
-            'message' => 'element deleted'
         ];
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInformationTable extends Migration
+class CreateInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('informations', function (Blueprint $table)
+        Schema::create('infos', function (Blueprint $table)
         {
             $table->id();
             $table->foreignId('user_id')->constrained('users')
@@ -30,7 +30,6 @@ class CreateInformationTable extends Migration
 
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -38,6 +37,6 @@ class CreateInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('informations');
+        Schema::dropIfExists('infos');
     }
 }

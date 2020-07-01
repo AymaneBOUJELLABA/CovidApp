@@ -12,9 +12,9 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens;
 
 
-    public function information()
+    public function info()
     {
-        return $this->hasOne(Information::class);
+        return $this->hasOne(Info::class);
     }
 
     public function question()

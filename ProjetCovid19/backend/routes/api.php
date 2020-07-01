@@ -23,6 +23,7 @@ Route::post('comment', 'CommentController@store');
 Route::put('comment/{id}', 'CommentController@update');
 Route::delete('comment/{id}', 'CommentController@delete');
 
+//les routes pour la gestion des questions du formulaire
 Route::middleware('auth:sanctum')->group(
     function ()
     {
@@ -31,6 +32,17 @@ Route::middleware('auth:sanctum')->group(
         Route::post('question/{id}', 'QuestionController@store');
         Route::put('question/{id}', 'QuestionController@update');
         Route::delete('question/{id}', 'QuestionController@delete');
+    }
+);
+
+Route::middleware('auth:sanctum')->group(
+    function ()
+    {
+        Route::get('infos', 'InfoController@index');
+        Route::get('info/{id}', 'InfoController@show');
+        Route::post('info/{id}', 'InfoController@store');
+        Route::put('info/{id}', 'InfoController@update');
+        Route::delete('info/{id}', 'InfoController@delete');
     }
 );
 
