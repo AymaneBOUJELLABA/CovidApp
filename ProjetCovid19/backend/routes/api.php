@@ -25,8 +25,7 @@ Route::delete('comment/{id}', 'CommentController@delete');
 
 //les routes pour la gestion des questions du formulaire
 Route::middleware('auth:sanctum')->group(
-    function ()
-    {
+    function () {
         Route::get('questions', 'QuestionController@index');
         Route::get('question/{id}', 'QuestionController@show');
         Route::post('question/{id}', 'QuestionController@store');
@@ -36,8 +35,7 @@ Route::middleware('auth:sanctum')->group(
 );
 
 Route::middleware('auth:sanctum')->group(
-    function ()
-    {
+    function () {
         Route::get('infos', 'InfoController@index');
         Route::get('info/{id}', 'InfoController@show');
         Route::post('info/{id}', 'InfoController@store');
@@ -48,18 +46,80 @@ Route::middleware('auth:sanctum')->group(
 
 
 //For the users ( customers)
-Route::middleware('auth:sanctum')->get('/user', function (Request $request)
-{
+
+//get the user I'm using to log in
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth:sanctum')->post('/logout', function (Request $request)
-{
+//get all the  users if I'm logged in
+Route::middleware('auth:sanctum')->get('/users', function () {
+    return User::all();
+});
+//delete the user
+Route::middleware('auth:sanctum')->delete('user/delete/{id}', function ($id) {
+    $user = User::findOrFail($id);
+    $user->delete();
+    return response('User deleted', 200);
+});
+
+
+
+
+
+//update the user
+Route::middleware('auth:sanctum')->post('/user/update/{id}', function (Request $request, $id) {
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8'
+    ]);
+    $user = User::findOrFail($id);
+    $data = $request->all();
+    $user->name = $data['name'];
+    $user->email = $data['email'];
+    $user->password = Hash::make($data['password']);
+    $user->save();
+    return response('user Updated', 200);
+});
+
+
+//logout if I'm logged in
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->tokens()->delete();
     return response('Logged out', 200);
 });
 
-Route::post('/login', function (Request $request)
-{
+
+//register a new user
+
+Route::post('/register', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+        'device_name' => 'required'
+    ]);
+
+    $user = User::create(
+        [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]
+    );
+
+    $token = $user->createToken($request->device_name)->plainTextToken;
+
+    $response = [
+        'user' => $user,
+        'token' => $token
+    ];
+    return response($response, 201);
+});
+
+//the login
+Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
