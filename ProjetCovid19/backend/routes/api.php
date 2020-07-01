@@ -23,8 +23,19 @@ Route::post('comment', 'CommentController@store');
 Route::put('comment/{id}', 'CommentController@update');
 Route::delete('comment/{id}', 'CommentController@delete');
 
+Route::middleware('auth:sanctum')->group(
+    function ()
+    {
+        Route::get('questions', 'QuestionController@index');
+        Route::get('question/{id}', 'QuestionController@show');
+        Route::post('question/{id}', 'QuestionController@store');
+        Route::put('question/{id}', 'QuestionController@update');
+        Route::delete('question/{id}', 'QuestionController@delete');
+    }
+);
 
-//For the uses ( customers)
+
+//For the users ( customers)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request)
 {
     return $request->user();
