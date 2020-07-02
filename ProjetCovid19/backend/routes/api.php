@@ -35,7 +35,6 @@ Route::middleware('auth:sanctum')->group(
     }
 );
 
-
 //les routes pour les informations de chaque utilisateur
 Route::middleware('auth:sanctum')->group(
     function ()
