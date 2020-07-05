@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')
-                                        ->onDelete('cascade');
+                ->onDelete('cascade');
 
             $table->string('Q1');
             $table->string('Q2');
@@ -25,10 +25,9 @@ class CreateQuestionsTable extends Migration
             $table->string('Q5');
 
             $table->boolean('isTreated')->default(0);
-            $table->string('resultat');
+            $table->string('resultat')->nullable();
 
             $table->timestamps();
-
         });
     }
 

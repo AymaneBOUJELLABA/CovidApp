@@ -11,7 +11,6 @@ class InfoController extends Controller
     public function index()
     {
         return Info::all();
-
     }
 
     public function show($id)
@@ -19,11 +18,10 @@ class InfoController extends Controller
         return User::find($id)->info;
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $user = User::findOrFail($id);
-        if($user->info)
-        {
+        $user = $request->user();
+        if ($user->info) {
             return response('already exists');
         }
         $data = $request->all();
@@ -34,24 +32,21 @@ class InfoController extends Controller
         $user->info()->save($information);
 
         return $user->info;
-
     }
 
     public function update(Request $request, $id)
     {
-        $information= User::findOrFail($id)->info;
+        $information = User::findOrFail($id)->info;
 
         $information->update($request->all());
 
         return $information;
-
     }
 
     public function delete(Request $request, $id)
     {
         $information = User::findOrFail($id)->info;
-        if(!$information)
-        {
+        if (!$information) {
             return  [
                 'message' => $message = 'no infos for this user',
                 'code' => 204,
@@ -59,14 +54,14 @@ class InfoController extends Controller
         }
         $isdeleted = $information->delete();
 
-        if($isdeleted)
+        if ($isdeleted)
             $message = 'deleted successfully';
         else
             $message = 'deletion failed';
-        
-       return [
-           'message' => $message,
-           'code' => 204,
-       ];
+
+        return [
+            'message' => $message,
+            'code' => 204,
+        ];
     }
 }

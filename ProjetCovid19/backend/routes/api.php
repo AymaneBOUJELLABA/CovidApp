@@ -37,11 +37,10 @@ Route::middleware('auth:sanctum')->group(
 
 //les routes pour les informations de chaque utilisateur
 Route::middleware('auth:sanctum')->group(
-    function ()
-    {
+    function () {
         Route::get('infos', 'InfoController@index');
         Route::get('info/{id}', 'InfoController@show');
-        Route::post('info/{id}', 'InfoController@store');
+        Route::post('info', 'InfoController@store');
         Route::put('info/{id}', 'InfoController@update');
         Route::delete('info/{id}', 'InfoController@delete');
     }
@@ -50,19 +49,18 @@ Route::middleware('auth:sanctum')->group(
 
 //les routes pour controller l'authentification de l'utilisateur
 Route::middleware('auth:sanctum')->group(
-    function ()
-    {
+    function () {
         Route::get('/user', 'UserController@currentUser');
-        Route::get('/users',"UserController@index");
+        Route::get('/users', "UserController@index");
 
         //pour l'admin
         Route::post('/admin/register', 'UserController@registerAdmin')->withoutMiddleware('auth:sanctum');
         //pour utilisateur simple
-        Route::post('/user/logout','UserController@logout');
-        Route::post('/user/login','UserController@login')->withoutMiddleware('auth:sanctum');
+        Route::post('/user/logout', 'UserController@logout');
+        Route::post('/user/login', 'UserController@login')->withoutMiddleware('auth:sanctum');
         Route::post('/user/register', 'UserController@register')->withoutMiddleware('auth:sanctum');
-        
+
         Route::put('/user/update/{id}', 'UserController@update');
-        Route::delete('user/delete/{id}','UserController@delete');
+        Route::delete('user/delete/{id}', 'UserController@delete');
     }
 );
