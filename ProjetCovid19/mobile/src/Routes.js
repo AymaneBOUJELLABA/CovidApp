@@ -44,6 +44,13 @@ export default function Routes() {
       </View>
     );
   }
+  if (info) {
+    return (
+      <NavigationContainer>
+        {<AppStack2 />}
+      </NavigationContainer>
+    );
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
