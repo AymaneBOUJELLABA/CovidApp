@@ -45,16 +45,12 @@ export default function Routes() {
     );
   }
   if (info) {
-    return (
-      <NavigationContainer>
-        {<AppStack2 />}
-      </NavigationContainer>
-    );
+    return <NavigationContainer>{<AppStack2 />}</NavigationContainer>;
   }
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {true ? <AppStack /> : <AuthStack />}
+      {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

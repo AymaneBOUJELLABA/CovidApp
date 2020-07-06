@@ -8,7 +8,7 @@ axios.defaults.baseURL = "http://192.168.1.13:8000";
 export const AuthContext = React.createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ token: "" });
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [id, setId] = useState(null);
   const [info, setInfo] = useState(false);
