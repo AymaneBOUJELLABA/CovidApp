@@ -3,108 +3,214 @@ import React, { useContext, useState, useEffect, StyleSheet } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthContext } from "./AuthProvider";
 import styles from "./style";
-import { Keyboard, Text, View, TextInput, TouchableWithoutFeedback, Alert, KeyboardAvoidingView } from 'react-native';
-import { Button, CheckBox, Picker } from 'react-native';
-import axios from 'axios';
+import { Keyboard, Text, View, TextInput } from "react-native";
+import { Button, CheckBox, Picker, Image } from "react-native";
+import axios from "axios";
 import { AuthStack } from "./AuthProvider";
 import { NavigationContainer } from "@react-navigation/native";
-axios.defaults.baseURL = 'http://192.168.1.13:8000';
+import { TouchableOpacity } from "react-native-gesture-handler";
+axios.defaults.baseURL = "http://192.168.1.13:8000";
 
 const Stack = createStackNavigator();
 
 function DashboardScreen({ navigation }) {
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext);
   const [name, setName] = useState(null);
 
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
 
-    axios.get('/api/user')
-      .then(response => {
+    axios
+      .get("/api/user")
+      .then((response) => {
         setName(response.data.name);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response);
-      })
-
+      });
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', marginTop: 60 }}>
-      <Text>Bienvenue {name} sur votre platforme de test de covid 19</Text>
+    <View style={{ flex: 1, alignItems: "center", marginTop: 60 }}>
+      <Text
+        style={{
+          flex: 1,
+          fontSize: 20,
+          textAlign: "center",
+          paddingHorizontal: 10,
+        }}
+      >
+        Bienvenue {name} sur votre platforme de test de covid19
+      </Text>
 
-      <View style={{ marginTop: 60, flexDirection: "row", justifyContent: "space-between" }}>
-        <Button type="outline" title="Fiche d'invistigation" onPress={() => navigation.navigate('Settings')} />
+      <View
+        style={{
+          flex: 8,
+          marginTop: 60,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            margin: 10,
+            backgroundColor: "white",
+            borderRadius: 20,
+            padding: 10,
+          }}
+          onPress={() => navigation.navigate("Settings")}
+        >
+          <Image
+            style={{ width: 75, height: 75 }}
+            source={require("./../assets/question.png")}
+          />
+          <Text>Fiche d'investigation</Text>
+        </TouchableOpacity>
 
-        <Button type="outline" title="Carte géographique" />
-
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            margin: 10,
+            backgroundColor: "white",
+            borderRadius: 20,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{ width: 75, height: 75 }}
+            source={require("./../assets/location.png")}
+          />
+          <Text>Carte géographique</Text>
+        </TouchableOpacity>
       </View>
-      <View style={{ marginTop: 200 }}>
-        <Button type="outline" title="Logout" onPress={() => logout()} />
-
+      <View style={{ flex: 1, width: "100%" }}>
+        <Button
+          title="Logout"
+          color="#e74c3c"
+          style={{ width: "100%" }}
+          onPress={() => logout()}
+        />
       </View>
-    </View >
+    </View>
   );
 }
 
 function SettingsScreen({ navigation }) {
   const { logout, addInfo, info } = useContext(AuthContext);
   const [isSelected, setSelection] = useState(false);
-  const [nom, setNom] = useState('');
-  const [prenom, setPreom] = useState('');
-  const [age, setAge] = useState('');
-  const [adresse, setAdresse] = useState('');
-  const [telephone, setTelephone] = useState('');
-  const [ville, setVille] = useState('');
-  const [selectedSexe, setSelectedSexe] = useState('');
+  const [nom, setNom] = useState("");
+  const [prenom, setPreom] = useState("");
+  const [age, setAge] = useState("");
+  const [adresse, setAdresse] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [ville, setVille] = useState("");
+  const [selectedSexe, setSelectedSexe] = useState("");
   return (
     <View style={{ flex: 1, marginTop: 30 }}>
-      <View style={{ alignItems: 'center', marginBottom: 10 }}>
-        <Text style={{ fontSize: 20 }} >Remplir votre information personnel</Text>
+      <View style={{ flex: 9 }}>
+        <View style={{ alignItems: "center", marginBottom: 10 }}>
+          <Text style={{ fontSize: 20 }}>
+            Remplir votre information personnel
+          </Text>
+        </View>
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setNom(text)}
+          placeholder="Nom"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setPreom(text)}
+          placeholder="Prenom"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setAge(text)}
+          placeholder="Age"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setAdresse(text)}
+          placeholder="Adresse"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setTelephone(text)}
+          placeholder="Telephone"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={(text) => setVille(text)}
+          placeholder="Ville"
+          placeholderColor="#c4c3cb"
+          style={styles.InfoFormTextInput}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 45,
+          }}
+        >
+          <Text>Sexe:</Text>
+          <Picker
+            selectedValue={selectedSexe}
+            style={{
+              height: 50,
+              width: 250,
+              marginHorizontal: 30,
+            }}
+            onValueChange={(itemValue, itemIndex) => setSelectedSexe(itemValue)}
+          >
+            <Picker.Item label="Femme" value="femme" />
+            <Picker.Item label="Homme" value="homme" />
+          </Picker>
+        </View>
       </View>
-      <TextInput autoCapitalize='none' onChangeText={text => setNom(text)} placeholder="Nom" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-      <TextInput autoCapitalize='none' onChangeText={text => setPreom(text)} placeholder="Prenom" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-      <TextInput autoCapitalize='none' onChangeText={text => setAge(text)} placeholder="Age" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-      <TextInput autoCapitalize='none' onChangeText={text => setAdresse(text)} placeholder="Adresse" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-      <TextInput autoCapitalize='none' onChangeText={text => setTelephone(text)} placeholder="Telephone" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-
-      <TextInput autoCapitalize='none' onChangeText={text => setVille(text)} placeholder="Ville" placeholderColor="#c4c3cb" style={styles.InfoFormTextInput} />
-      <Picker
-        selectedValue={selectedSexe}
-        style={{ height: 50, width: 150, marginHorizontal: 30 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedSexe(itemValue)}
-      >
-        <Picker.Item label="femme" value="femme" />
-        <Picker.Item label="homme" value="homme" />
-      </Picker>
-      <Button title="Submit" onPress={() => { addInfo(nom, prenom, age, adresse, telephone, ville, selectedSexe) }} />
-
-      <View style={{ marginTop: 100, flexDirection: "row" }}>
-        <Button type="outline" title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
-        <Button type="outline" title="Logout" onPress={() => logout()} />
-
-      </View>
+      <Button
+        title="Submit"
+        style={{ flex: 1 }}
+        onPress={() => {
+          addInfo(nom, prenom, age, adresse, telephone, ville, selectedSexe);
+        }}
+      />
     </View>
   );
-
-
 }
-
 
 export const AppStack = () => {
-
-
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen
+        name="Dashboard"
+        options={{ title: "Acceuil" }}
+        component={DashboardScreen}
+      />
+      <Stack.Screen
+        name="Settings"
+        options={{ title: "Formulaire" }}
+        component={SettingsScreen}
+      />
     </Stack.Navigator>
-  )
+  );
+};
 
-
-}
-
-{/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center", }}>
+{
+  /* <View style={{ flex: 1, alignItems: "center", justifyContent: "center", }}>
         <View style={{ flexDirection: "row", marginBottom: 20 }}>
           <CheckBox
             value={isSelected}
@@ -114,4 +220,5 @@ export const AppStack = () => {
           <Text style={{ margin: 8, }} >Do you like React Native?</Text>
         </View>
         <Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>
-      </View> */}
+      </View> */
+}
