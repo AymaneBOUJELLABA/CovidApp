@@ -9,6 +9,7 @@ import axios from "axios";
 import { AuthStack } from "./AuthProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Survey from "./Survey";
 axios.defaults.baseURL = "http://192.168.1.13:8000";
 
 const Stack = createStackNavigator();
@@ -60,7 +61,7 @@ function DashboardScreen({ navigation }) {
             borderRadius: 20,
             padding: 10,
           }}
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => navigation.navigate("Survey")}
         >
           <Image
             style={{ width: 75, height: 75 }}
@@ -86,7 +87,12 @@ function DashboardScreen({ navigation }) {
           <Text>Carte géographique</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1, width: "100%" }}>
+      <View style={{ flex: 2, width: "100%" }}>
+        <Button
+          title="Profile"
+          style={{ width: "100%", marginBottom: 20 }}
+          onPress={() => navigation.navigate("Settings")}
+        />
         <Button
           title="Logout"
           color="#e74c3c"
@@ -202,8 +208,13 @@ export const AppStack = () => {
       />
       <Stack.Screen
         name="Settings"
-        options={{ title: "Formulaire" }}
+        options={{ title: "Profile" }}
         component={SettingsScreen}
+      />
+      <Stack.Screen
+        name="Survey"
+        options={{ title: "Formulaire" }}
+        component={Survey}
       />
     </Stack.Navigator>
   );
